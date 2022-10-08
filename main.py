@@ -5,7 +5,7 @@ from utils.tableau import Tableau
 
 def main():
     explain = """
-A entrada do programa deve ser a função objetiva seguida das restrições já na forma padrão. SEMPRE com o coeficiente antecedendo a variável, mesmo que este seja 0 ou 1.
+A entrada do programa deve ser a função objetiva seguida das restrições já na forma padrão. SEMPRE com o coeficiente antecedendo a variável, mesmo que este seja 0 ou 1, enquanto que a variável tem nomes xi para i = 1...n.
 Ex:.
 Para um PPL:
 Max z = 10x1 + 20x2
@@ -14,6 +14,7 @@ Suj a:
 
 x1 + 2x2 <=10
 x1 + 3x2 <=20
+x1, x2 >= 0
 
 Entrada no programa:
 
