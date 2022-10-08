@@ -11,7 +11,9 @@ class Tableau:
         self.height, self.length = restrictions.shape
 
         diff_len = self.length - len(obj_func)
-        self.obj_func = np.append(obj_func, [0] * diff_len)*(1 if self.direction == "min" else -1)
+        self.obj_func = np.append(obj_func, [0] * diff_len) * (
+            1 if self.direction == "min" else -1
+        )
 
         self.bases = [
             index
@@ -52,8 +54,9 @@ class Tableau:
         _vars = [0] * (self.length - 1)
         for row, base in enumerate(self.bases):
             _vars[base] = self.restrictions[row, -1]
-        
+
         return _vars, self.obj_func[-1]
+
     def solver(self):
 
         print(self, end="\n\n")
@@ -67,7 +70,7 @@ class Tableau:
             self.restrictions[row, :] /= self.restrictions[row, column]
 
             print(
-                f"Variavel a entrar: X_{column}\nVariavel a sair: X_{self.bases[row]}"
+                f"Variavel a entrar: X_{column+1}\nVariavel a sair: X_{self.bases[row]+1}"
             )
             self.bases[row] = column
             self.calculate_new_rows(row, column)
@@ -80,11 +83,13 @@ class Tableau:
     def __repr__(self):
         table = dict()
         for index in range(self.length - 1):
-            table[f"X_{index}"] = np.append(
+            table[f"X_{index+1}"] = np.append(
                 self.restrictions[:, index], self.obj_func[index]
             )
         table["b"] = np.append(self.restrictions[:, -1], self.obj_func[-1])
-        df = pd.DataFrame(table, index=[f"X_{index}" for index in self.bases] + ["FO"])
+        df = pd.DataFrame(
+            table, index=[f"X_{index+1}" for index in self.bases] + ["FO"]
+        )
 
         return df.to_string()
 

@@ -37,8 +37,8 @@ Max: 10x1 + 20x2
     problem = Problem(infos[0], infos[1:])
     obj_func, restrictions, direction = problem.standard_form()
     tab = Tableau(np.array(obj_func), np.array(restrictions), direction)
-    tab.solver()
-
+    _vars, type = tab.solver()
+    print(f"X = {_vars[0]}, Z = {float(_vars[1])}, Solução {type}")
 
 if __name__ == "__main__":
     main()
