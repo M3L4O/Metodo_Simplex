@@ -14,12 +14,14 @@ class Tableau:
         self.obj_func = np.append(obj_func, [0] * diff_len) * (
             1 if self.direction == "min" else -1
         )
-
-        self.bases = [
-            index
-            for index in range(self.length - 1)
-            if np.sum(self.restrictions[:, index]) + self.obj_func[index] == 1
-        ]
+        self.bases = []
+        for index in range(self.length - 1):
+            ones = self.restrictions[self.restrictions[:, index] == 1, index].size
+            zeros = self.restrictions[self.restrictions[:, index] == 0, index].size
+            zeros += 1 if self.obj_func[index] == 0 else 0
+            if ones == 1 and zeros == self.height:
+                self.bases.append(index)
+            print(self.bases)
 
     def is_great_solution(self):
         return np.all(self.obj_func >= 0)
