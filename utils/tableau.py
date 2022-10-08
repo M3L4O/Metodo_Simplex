@@ -11,7 +11,7 @@ class Tableau:
         self.height, self.length = restrictions.shape
 
         diff_len = self.length - len(obj_func)
-        self.obj_func = np.append(obj_func, [0] * diff_len) * -1
+        self.obj_func = np.append(obj_func, [0] * diff_len)
 
         self.bases = [
             index
@@ -47,23 +47,23 @@ class Tableau:
                 self.restrictions[_row, :] -= factor * self.restrictions[row, :]
         factor = self.obj_func[column] / self.restrictions[row, column]
         self.obj_func -= factor * self.restrictions[row, :]
-    
+
     def solution(self):
-        _vars = [0]*(self.length-1)
+        _vars = [0] * (self.length - 1)
         for row, base in enumerate(self.bases):
-            _vars[base] = self.restrictions[row, -1] 
-        return _vars
+            _vars[base] = self.restrictions[row, -1]
+        return _vars, self.obj_func[-1] * -1
 
     def solver(self):
+
+        print(self, end="\n\n")
         while not self.is_great_solution():
             column = self.get_minimizer_column()
             if self.unlimited_solution(column):
                 return self.solution(), "Ilimitada"
 
-
             row = self.get_base_to_getout(column)
 
-            print(self, end="\n\n")
             self.restrictions[row, :] /= self.restrictions[row, column]
 
             print(
@@ -71,6 +71,9 @@ class Tableau:
             )
             self.bases[row] = column
             self.calculate_new_rows(row, column)
+
+            print(self, end="\n\n")
+
         else:
             return self.solution(), "Limitada"
 
@@ -87,9 +90,7 @@ class Tableau:
 
 
 if __name__ == "__main__":
-    OF = np.array([5, 2, 0, 0, 0], dtype=np.float64)
-    restrictions = np.array(
-        [[1, 0, 1, 0, 0, 3], [0, 1, 0, 1, 0, 4], [4, 3, 0, 0, 1, 12]], dtype=np.float64
-    )
+    OF = np.array([-20,-24], dtype=np.float64)
+    restrictions = np.array([[3 ,6 ,1, 0,60 ], [4, 2, 0 ,1, 32]], dtype=np.float64)
     tb = Tableau(OF, restrictions)
     print(tb.solver())
