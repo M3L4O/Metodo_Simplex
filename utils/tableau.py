@@ -3,16 +3,15 @@ import pandas as pd
 
 
 class Tableau:
-    def __init__(self, obj_func: np.ndarray, restrictions: np.ndarray):
+    def __init__(self, obj_func: np.ndarray, restrictions: np.ndarray, direction):
 
         pd.options.display.float_format = "{:.1f}".format
-
+        self.direction = direction
         self.restrictions = restrictions
         self.height, self.length = restrictions.shape
 
         diff_len = self.length - len(obj_func)
         self.obj_func = np.append(obj_func, [0] * diff_len)
-
         self.bases = [
             index
             for index in range(self.length - 1)
@@ -45,6 +44,7 @@ class Tableau:
                     self.restrictions[_row, column] / self.restrictions[row, column]
                 )
                 self.restrictions[_row, :] -= factor * self.restrictions[row, :]
+
         factor = self.obj_func[column] / self.restrictions[row, column]
         self.obj_func -= factor * self.restrictions[row, :]
 
@@ -52,7 +52,8 @@ class Tableau:
         _vars = [0] * (self.length - 1)
         for row, base in enumerate(self.bases):
             _vars[base] = self.restrictions[row, -1]
-        return _vars, self.obj_func[-1] * -1
+        
+        return _vars, self.obj_func[-1]*(-1 if self.direction == "min" else 1)
 
     def solver(self):
 
@@ -79,6 +80,7 @@ class Tableau:
 
     def __repr__(self):
         table = dict()
+        print(self.bases)
         for index in range(self.length - 1):
             table[f"X_{index}"] = np.append(
                 self.restrictions[:, index], self.obj_func[index]
@@ -90,7 +92,7 @@ class Tableau:
 
 
 if __name__ == "__main__":
-    OF = np.array([-20,-24], dtype=np.float64)
-    restrictions = np.array([[3 ,6 ,1, 0,60 ], [4, 2, 0 ,1, 32]], dtype=np.float64)
-    tb = Tableau(OF, restrictions)
+    OF = np.array([-5, -2], dtype=np.float64)
+    restrictions = np.array([[10, 12, 1, 0, 60], [2, 1, 0, 1, 6]], dtype=np.float64)
+    tb = Tableau(OF, restrictions, "max")
     print(tb.solver())
