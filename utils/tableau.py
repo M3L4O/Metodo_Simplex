@@ -21,7 +21,6 @@ class Tableau:
             zeros += 1 if self.obj_func[index] == 0 else 0
             if ones == 1 and zeros == self.height:
                 self.bases.append(index)
-            print(self.bases)
 
     def is_great_solution(self):
         return np.all(self.obj_func >= 0)
