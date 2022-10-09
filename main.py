@@ -8,20 +8,21 @@ def main():
 A entrada do programa deve ser a função objetiva seguida das restrições já na forma padrão. SEMPRE com o coeficiente antecedendo a variável, mesmo que este seja 0 ou 1, enquanto que a variável tem nomes xi para i = 1...n.
 Ex:.
 Para um PPL:
-Max z = 10x1 + 20x2
+Max z = 5x1 + 2x2
 
 Suj a:
 
-x1 + 2x2 <=10
-x1 + 3x2 <=20
-x1, x2 >= 0
+x1 + 2x2 <=9
+x1  <=3
+x2  <=4
 
+x1, x2 >= 0
 Entrada no programa:
 
-Max: 10x1 + 20x2
-1x1 + 2x2 + 1x3 + 0x4 = 10
-1x1 + 3x2 + 0x3 +1x4 = 20
-
+Max: 5x1 + 2x2 
+1x1 + 2x2 + 1x3 + 0x4 + 0x5 = 9
+1x1 + 0x2 + 0x3 + 1x4 + 0x5 = 3
+0x1 + 1x2 + 0x3 + 0x4 + 1x5 = 4
 
 """
     print(explain)
@@ -34,12 +35,13 @@ Max: 10x1 + 20x2
             break
 
         infos.append(info)
-
+    
     problem = Problem(infos[0], infos[1:])
     obj_func, restrictions, direction = problem.standard_form()
     tab = Tableau(np.array(obj_func), np.array(restrictions), direction)
     _vars, type = tab.solver()
     print(f"X = {_vars[0]}, Z = {float(_vars[1])}, Solução {type}")
-
+    
+    _ = input("Tecle qualquer tecla para encerrar: ") 
 if __name__ == "__main__":
     main()
