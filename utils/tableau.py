@@ -56,7 +56,7 @@ class Tableau:
         for row, base in enumerate(self.bases):
             _vars[base] = self.restrictions[row, -1]
 
-        return _vars, self.obj_func[-1]
+        return _vars, self.obj_func[-1] * (-1 if self.direction == "min" else 1)
 
     def solver(self):
 
