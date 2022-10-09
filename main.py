@@ -42,6 +42,6 @@ Max: 5x1 + 2x2
     _vars, type = tab.solver()
     print(f"X = {_vars[0]}, Z = {float(_vars[1])}, Solução {type}")
     
-    _ = input("Tecle qualquer tecla para encerrar: ") 
+    _ = input("Tecle enter para encerrar: ") 
 if __name__ == "__main__":
     main()
