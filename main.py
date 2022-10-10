@@ -5,7 +5,7 @@ from utils.tableau import Tableau
 
 def main():
     explain = """
-A entrada do programa deve ser a função objetiva seguida das restrições já na forma padrão. SEMPRE com o coeficiente antecedendo a variável, mesmo que este seja 0 ou 1, caso o coeficiente seja negativo, ainda usa-se o operador "+",  enquanto que a variável tem nomes xi para i = 1...n.
+A entrada do programa deve ser a função objetiva seguida das restrições já na FORMA PADRÃO. SEMPRE com o coeficiente antecedendo a variável, mesmo que este seja 0 ou 1, caso o coeficiente seja negativo, ainda usa-se o operador "+",  enquanto que a variável tem nomes xi para i = 1...n.
 Ex:.
 Para um PPL:
 Min z = -5x1 - 2x2
