@@ -22,6 +22,7 @@ min:-5x1 + -2x2
 1x1 + 0x2 + 1x3 + 0x4 + 0x5 = 3
 0x1 + 1x2 + 0x3 + 1x4 + 0x5 = 4
 1x1 + 2x2 + 0x3 + 0x4 + 1x5 = 9
+<-- Por fim um ENTER
 """
     print(explain)
     infos = []
